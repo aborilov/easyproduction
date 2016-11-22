@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+from django.utils.translation import ugettext_lazy as _
+
 from django import forms
 from django.db import models
 
@@ -15,6 +17,10 @@ class Role(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('Role')
+        verbose_name_plural = _('Roles')
+
 
 class User(models.Model):
     username = models.CharField(max_length=255)
@@ -26,6 +32,10 @@ class User(models.Model):
     def __str__(self):
         return self.username
 
+    class Meta:
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
+
 
 class CostCenter(models.Model):
     name = models.CharField(max_length=255)
@@ -34,12 +44,20 @@ class CostCenter(models.Model):
     def __str__(self):
         return "{}:{}".format(self.name, self.num)
 
+    class Meta:
+        verbose_name = _('CostCenter')
+        verbose_name_plural = _('CostCenters')
+
 
 class PartType(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _('PartType')
+        verbose_name_plural = _('PartTypes')
 
 
 class Part(models.Model):
@@ -52,6 +70,10 @@ class Part(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('Part')
+        verbose_name_plural = _('Parts')
+
 
 class Place(models.Model):
     name = models.CharField(max_length=255)
@@ -63,6 +85,10 @@ class Place(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('Place')
+        verbose_name_plural = _('Places')
+
 
 class WorkType(models.Model):
     name = models.CharField(max_length=255)
@@ -71,4 +97,6 @@ class WorkType(models.Model):
     def __str__(self):
         return self.name
 
-
+    class Meta:
+        verbose_name = _('WorkType')
+        verbose_name_plural = _('WorkTypes')

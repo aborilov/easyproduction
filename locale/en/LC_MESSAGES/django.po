@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-22 05:40+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: benteler/models.py:21
+msgid "Role"
+msgstr "Role"
+
+#: benteler/models.py:22
+msgid "Roles"
+msgstr "Roles"
+
+#: benteler/models.py:36
+msgid "User"
+msgstr "User"
+
+#: benteler/models.py:37
+msgid "Users"
+msgstr "Users"
+
+#: benteler/models.py:48
+msgid "CostCenter"
+msgstr "Cost center"
+
+#: benteler/models.py:49
+msgid "CostCenters"
+msgstr "Cost centers"
+
+#: benteler/models.py:59
+msgid "PartType"
+msgstr "Part type"
+
+#: benteler/models.py:60
+msgid "PartTypes"
+msgstr "Part types"
+
+#: benteler/models.py:74
+msgid "Part"
+msgstr "Part"
+
+#: benteler/models.py:75
+msgid "Parts"
+msgstr "Parts"
+
+#: benteler/models.py:89
+msgid "Place"
+msgstr "Place"
+
+#: benteler/models.py:90
+msgid "Places"
+msgstr "Places"
+
+#: benteler/models.py:101
+msgid "WorkType"
+msgstr "Work type"
+
+#: benteler/models.py:102
+msgid "WorkTypes"
+msgstr "Work types"
+
+#: easyproduction/settings.py:120
+msgid "Russian"
+msgstr "Russian"
+
+#: easyproduction/settings.py:121
+msgid "English"
+msgstr "English"
