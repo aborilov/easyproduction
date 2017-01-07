@@ -82,7 +82,7 @@ class Manufacturer(models.Model):
 
     class Meta:
         verbose_name = _('Manufacturer')
-        verbose_name_plural = _('Manufacturer')
+        verbose_name_plural = _('Manufacturers')
 
 class Place(models.Model):
     name = models.CharField(max_length=255)
