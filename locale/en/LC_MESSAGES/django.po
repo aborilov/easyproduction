@@ -73,6 +73,15 @@ msgstr "Work type"
 msgid "WorkTypes"
 msgstr "Work types"
 
+#: benteler/models.py:84
+msgid "Manufacturer"
+msgstr "Manufacturer"
+
+#: benteler/models.py:85
+msgid "Manufacturers"
+msgstr "Manufacturers"
+
+
 #: easyproduction/settings.py:120
 msgid "Russian"
 msgstr "Russian"
