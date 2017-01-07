@@ -74,6 +74,15 @@ class Part(models.Model):
         verbose_name = _('Part')
         verbose_name_plural = _('Parts')
 
+class Manufacturer(models.Model):
+    name = models.CharField(max_length=255)
+   
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Manufacturer')
+        verbose_name_plural = _('Manufacturer')
 
 class Place(models.Model):
     name = models.CharField(max_length=255)
