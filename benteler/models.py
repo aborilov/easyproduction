@@ -59,21 +59,6 @@ class PartType(models.Model):
         verbose_name = _('PartType')
         verbose_name_plural = _('PartTypes')
 
-
-class Part(models.Model):
-    name = models.CharField(max_length=255)
-    # May be we need to use separate model for manufacturers
-    manufacturer = models.CharField(max_length=255)
-    code = models.CharField(max_length=255)
-    part_type = models.ForeignKey(PartType, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = _('Part')
-        verbose_name_plural = _('Parts')
-
 class Manufacturer(models.Model):
     name = models.CharField(max_length=255)
    
@@ -83,6 +68,20 @@ class Manufacturer(models.Model):
     class Meta:
         verbose_name = _('Manufacturer')
         verbose_name_plural = _('Manufacturers')
+        
+class Part(models.Model):
+    name = models.CharField(max_length=255)
+    # May be we need to use separate model for manufacturers
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+    code = models.CharField(max_length=255)
+    part_type = models.ForeignKey(PartType, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Part')
+        verbose_name_plural = _('Parts')
 
 class Place(models.Model):
     name = models.CharField(max_length=255)
