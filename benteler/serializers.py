@@ -2,13 +2,17 @@ from .models import User, Role
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.ModelSerializer):
+class BaseSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
+
+
+class UserSerializer(BaseSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email', 'create_time', 'role', 'url')
+        fields = ('id', 'username', 'email', 'create_time', 'role', 'url')
 
 
-class RoleSerializer(serializers.ModelSerializer):
+class RoleSerializer(BaseSerializer):
     class Meta:
         model = Role
-        fields = ('name', 'url')
+        fields = ('id', 'name', 'url')
