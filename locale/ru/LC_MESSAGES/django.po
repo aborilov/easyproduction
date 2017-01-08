@@ -83,6 +83,10 @@ msgstr "Типы запчастей"
 msgid "Manufacturer"
 msgstr "Производитель"
 
+#: benteler/models.py:75
+msgid "Manufacturers"
+msgstr "Производители"
+
 #: benteler/models.py:76
 msgid "Code"
 msgstr "Код"

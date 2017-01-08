@@ -68,12 +68,21 @@ class PartType(models.Model):
         verbose_name = _('PartType')
         verbose_name_plural = _('PartTypes')
 
+@python_2_unicode_compatible
+class Manufacturer(models.Model):
+    name = models.CharField(max_length=255, verbose_name=_('Name'))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Manufacturer')
+        verbose_name_plural = _('Manufacturers')
 
 @python_2_unicode_compatible
 class Part(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
-    # May be we need to use separate model for manufacturers
-    manufacturer = models.CharField(max_length=255, verbose_name=_('Manufacturer'))
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE, verbose_name=_('Manufacturer'))
     code = models.CharField(max_length=255, verbose_name=_('Code'))
     part_type = models.ForeignKey(PartType, on_delete=models.CASCADE, verbose_name=_('PartType'))
 
@@ -88,9 +97,9 @@ class Part(models.Model):
 @python_2_unicode_compatible
 class Place(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
-    serial_number = models.CharField(max_length=255, verbose_name=_('SerialNumber'))
+    serial_number = models.CharField(max_length=255, verbose_name=_('SerialNumber'), blank=True)
     active = models.BooleanField(default=True, verbose_name=_('Active'))
-    cost_center = models.ForeignKey(CostCenter, on_delete=models.CASCADE, verbose_name=_('CostCenter'))
+    cost_center = models.ForeignKey(CostCenter, on_delete=models.CASCADE, verbose_name=_('CostCenter'), blank=True, null=True )
     parts = models.ManyToManyField(Part, verbose_name=_('Parts'), blank=True)
     parent_place = models.ForeignKey('Place', blank=True, null=True, verbose_name=_('ParentPlace'))
 
@@ -118,10 +127,10 @@ class WorkType(models.Model):
 @python_2_unicode_compatible
 class WorkPattern(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
-    description = models.CharField(max_length=255, verbose_name=_('Description'))
+    description = models.CharField(max_length=255, verbose_name=_('Description'), blank=True)
     work_type = models.ForeignKey(WorkType, on_delete=models.CASCADE, verbose_name=_('WorkType'))
-    duration = models.IntegerField(verbose_name=_('Duration'))
-    period = models.IntegerField(verbose_name=_('Period'))
+    duration = models.IntegerField(verbose_name=_('Duration'), blank=True)
+    period = models.IntegerField(verbose_name=_('Period'), blank=True)
     child_group = models.ForeignKey('WorkPatternGroup', blank=True, null=True, verbose_name=_('ChildGroup'))
 
     def __str__(self):
