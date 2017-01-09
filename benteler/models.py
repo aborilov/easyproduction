@@ -226,3 +226,18 @@ class Event(models.Model):
     class Meta:
         verbose_name = _('Event')
         verbose_name_plural = _('Events')
+
+@python_2_unicode_compatible        
+class Report(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, blank=False, null=False, verbose_name=_('Event'))
+    reporter = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False, verbose_name=_('Reporter'))
+    date = models.DateField(default=datetime.today, blank=False, null=False, verbose_name=_('Date'))
+    worktime = models.IntegerField(verbose_name=_('WorkTime'))
+    downtime = models.IntegerField(verbose_name=_('DownTime'), blank=True)
+    
+    def __str__(self):
+        return "{}-{}".format(self.event.name, self.reporter.name)
+        
+    class Meta:
+        verbose_name = _('Report')
+        verbose_name_plural = _('Reports')

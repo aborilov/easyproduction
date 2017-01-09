@@ -243,6 +243,26 @@ msgstr "Событие"
 msgid "Events"
 msgstr "События"
 
+#: benteler/models.py:231
+msgid "Report"
+msgstr "Отчет"
+
+#: benteler/models.py:231
+msgid "Reports"
+msgstr "Отчеты"
+
+#: benteler/models.py:231
+msgid "Reporter"
+msgstr "Отчет от"
+
+#: benteler/models.py:231
+msgid "WorkTime"
+msgstr "Время работы"
+
+#: benteler/models.py:231
+msgid "DownTime"
+msgstr "Время простоя"
+
 #: easyproduction/settings.py:121
 msgid "Russian"
 msgstr "Русский"
