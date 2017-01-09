@@ -87,8 +87,9 @@ class Part(models.Model):
     part_type = models.ForeignKey(PartType, on_delete=models.CASCADE, verbose_name=_('PartType'))
 
     def __str__(self):
-        return self.name
-
+        #return self.name
+        return "{}-{}-{}".format(self.part_type.name,self.manufacturer.name, self.code)
+    
     class Meta:
         verbose_name = _('Part')
         verbose_name_plural = _('Parts')
@@ -104,7 +105,8 @@ class Place(models.Model):
     parent_place = models.ForeignKey('Place', blank=True, null=True, verbose_name=_('ParentPlace'))
 
     def __str__(self):
-        return self.name
+        #return self.name
+        return "{}-{}".format(self.parent_place.name, self.name)
 
     class Meta:
         verbose_name = _('Place')
@@ -117,8 +119,9 @@ class WorkType(models.Model):
     parent = models.ForeignKey('WorkType', blank=True, null=True, verbose_name=_('ParentWorkType'))
 
     def __str__(self):
-        return self.name
-
+        #return self.name
+        return "{}-{}".format(self.parent.name, self.name)
+    
     class Meta:
         verbose_name = _('WorkType')
         verbose_name_plural = _('WorkTypes')
