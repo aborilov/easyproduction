@@ -100,13 +100,18 @@ class Place(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     serial_number = models.CharField(max_length=255, verbose_name=_('SerialNumber'), blank=True)
     active = models.BooleanField(default=True, verbose_name=_('Active'))
-    cost_center = models.ForeignKey(CostCenter, on_delete=models.CASCADE, verbose_name=_('CostCenter'), blank=True, null=True )
+    cost_center = models.ForeignKey(CostCenter, on_delete=models.CASCADE, verbose_name=_('CostCenter'), 
+                                    blank=True, null=True )
     parts = models.ManyToManyField(Part, verbose_name=_('Parts'), blank=True)
     parent_place = models.ForeignKey('Place', blank=True, null=True, verbose_name=_('ParentPlace'))
 
     def __str__(self):
         #return self.name
-        return "{}-{}".format(self.parent_place.name, self.name)
+        if self.parent_place is None:
+            return "{}".format(self.name)
+        else:
+            return "{}-{}".format(self.parent_place.name, self.name)
+        
 
     class Meta:
         verbose_name = _('Place')
@@ -120,7 +125,10 @@ class WorkType(models.Model):
 
     def __str__(self):
         #return self.name
-        return "{}-{}".format(self.parent.name, self.name)
+        if self.parent.name is None:
+            return "{}".format(self.name)
+        else:
+            return "{}-{}".format(self.parent.name, self.name)
     
     class Meta:
         verbose_name = _('WorkType')
