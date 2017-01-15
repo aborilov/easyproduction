@@ -83,6 +83,10 @@ msgstr "Типы запчастей"
 msgid "Manufacturer"
 msgstr "Производитель"
 
+#: benteler/models.py:75
+msgid "Manufacturers"
+msgstr "Производители"
+
 #: benteler/models.py:76
 msgid "Code"
 msgstr "Код"
@@ -238,6 +242,26 @@ msgstr "Событие"
 #: benteler/models.py:215
 msgid "Events"
 msgstr "События"
+
+#: benteler/models.py:231
+msgid "Report"
+msgstr "Отчет"
+
+#: benteler/models.py:231
+msgid "Reports"
+msgstr "Отчеты"
+
+#: benteler/models.py:231
+msgid "Reporter"
+msgstr "Отчет от"
+
+#: benteler/models.py:231
+msgid "WorkTime"
+msgstr "Время работы"
+
+#: benteler/models.py:231
+msgid "DownTime"
+msgstr "Время простоя"
 
 #: easyproduction/settings.py:121
 msgid "Russian"
