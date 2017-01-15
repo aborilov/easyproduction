@@ -106,13 +106,8 @@ class Place(models.Model):
     parent_place = models.ForeignKey('Place', blank=True, null=True, verbose_name=_('ParentPlace'))
 
     def __str__(self):
-        #return self.name
-        if self.parent_place is None:
-            return "{}".format(self.name)
-        else:
-            return "{}-{}".format(self.parent_place.name, self.name)
-        
-
+        return self.name
+    
     class Meta:
         verbose_name = _('Place')
         verbose_name_plural = _('Places')
@@ -124,11 +119,7 @@ class WorkType(models.Model):
     parent = models.ForeignKey('WorkType', blank=True, null=True, verbose_name=_('ParentWorkType'))
 
     def __str__(self):
-        #return self.name
-        if self.parent.name is None:
-            return "{}".format(self.name)
-        else:
-            return "{}-{}".format(self.parent.name, self.name)
+        return self.name
     
     class Meta:
         verbose_name = _('WorkType')
