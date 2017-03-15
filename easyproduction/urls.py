@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'', include('benteler.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^docs/', include('rest_framework_docs.urls')),
 ]
