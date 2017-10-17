@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import python_2_unicode_compatible
 
 from django import forms
 from django.db import models
@@ -12,13 +11,23 @@ from datetime import date as datetime
 
 from enum import IntEnum
 
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+
 
 class UserForm(forms.ModelForm):
     class Meta:
         widgets = {'password': forms.PasswordInput()}
 
 
-@python_2_unicode_compatible
 class Role(models.Model):
     name = models.TextField(verbose_name=_('Name'))
 
@@ -30,7 +39,6 @@ class Role(models.Model):
         verbose_name_plural = _('Roles')
 
 
-@python_2_unicode_compatible
 class User(models.Model):
     username = models.TextField(verbose_name=_('UserName'))
     email = models.EmailField(verbose_name=_('Email'))
@@ -48,7 +56,6 @@ class User(models.Model):
         verbose_name_plural = _('Users')
 
 
-@python_2_unicode_compatible
 class CostCenter(models.Model):
     name = models.TextField(verbose_name=_('Name'))
     num = models.IntegerField(verbose_name=_('Num'))
@@ -61,7 +68,6 @@ class CostCenter(models.Model):
         verbose_name_plural = _('CostCenters')
 
 
-@python_2_unicode_compatible
 class PartType(models.Model):
     name = models.TextField(verbose_name=_('Name'))
 
@@ -73,7 +79,6 @@ class PartType(models.Model):
         verbose_name_plural = _('PartTypes')
 
 
-@python_2_unicode_compatible
 class Manufacturer(models.Model):
     name = models.TextField(verbose_name=_('Name'))
 
@@ -85,7 +90,6 @@ class Manufacturer(models.Model):
         verbose_name_plural = _('Manufacturers')
 
 
-@python_2_unicode_compatible
 class Part(models.Model):
     name = models.TextField(verbose_name=_('Name'))
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL,
@@ -105,7 +109,6 @@ class Part(models.Model):
         verbose_name_plural = _('Parts')
 
 
-@python_2_unicode_compatible
 class File(models.Model):
     name = models.TextField(verbose_name=_('Name'))
     description = models.TextField(verbose_name=_('Description'))
@@ -118,7 +121,6 @@ class File(models.Model):
         verbose_name_plural = _('Files')
 
 
-@python_2_unicode_compatible
 class Place(models.Model):
     name = models.TextField(verbose_name=_('Name'))
     serial_number = models.TextField(verbose_name=_('SerialNumber'),
@@ -140,7 +142,6 @@ class Place(models.Model):
         verbose_name_plural = _('Places')
 
 
-@python_2_unicode_compatible
 class WorkType(models.Model):
     name = models.TextField(verbose_name=_('Name'))
     parent = models.ForeignKey('WorkType', blank=True, null=True,
@@ -161,7 +162,6 @@ class RepeatedEnum(IntEnum):
     EveryYear = 3
 
 
-@python_2_unicode_compatible
 class Period(models.Model):
 
     repeated = models.IntegerField(
@@ -179,7 +179,6 @@ class Period(models.Model):
         verbose_name_plural = _('Periods')
 
 
-@python_2_unicode_compatible
 class WorkPattern(models.Model):
     name = models.TextField(verbose_name=_('Name'))
     description = models.TextField(null=True, blank=True,
@@ -202,7 +201,6 @@ class WorkPattern(models.Model):
         verbose_name_plural = _('WorkPatterns')
 
 
-@python_2_unicode_compatible
 class WorkPatternGroup(models.Model):
     name = models.TextField(verbose_name=_('Name'))
     child_patterns = models.ManyToManyField(WorkPattern, blank=True,
@@ -221,7 +219,6 @@ class WorkPatternGroup(models.Model):
         verbose_name_plural = _('WorkPatternGroups')
 
 
-@python_2_unicode_compatible
 class Work(models.Model):
     description = models.TextField(verbose_name=_('Description'))
     work_pattern = models.ForeignKey(WorkPattern, on_delete=models.CASCADE,
@@ -247,7 +244,6 @@ class Work(models.Model):
         verbose_name_plural = _('Works')
 
 
-@python_2_unicode_compatible
 class WorkGroup(models.Model):
     name = models.TextField(verbose_name=_('Name'))
     pattern_group = models.ForeignKey(WorkPatternGroup,
@@ -271,7 +267,6 @@ class WorkGroup(models.Model):
         verbose_name_plural = _('WorkGroups')
 
 
-@python_2_unicode_compatible
 class EventStatus(models.Model):
     name = models.TextField(verbose_name=_('Name'))
 
@@ -283,7 +278,6 @@ class EventStatus(models.Model):
         verbose_name_plural = _('EventStatuses')
 
 
-@python_2_unicode_compatible
 class Event(models.Model):
     work = models.ForeignKey(Work, on_delete=models.CASCADE,
                              verbose_name=_('Work'))
@@ -301,7 +295,6 @@ class Event(models.Model):
         verbose_name_plural = _('Events')
 
 
-@python_2_unicode_compatible
 class EventReport(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE,
                               verbose_name=_('Event'))
