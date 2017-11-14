@@ -17,11 +17,13 @@ from rest_framework.authtoken import views
 
 from django.conf.urls import url, include
 from django.contrib import admin
+from benteler.views import CurrentUserView
 
 urlpatterns = [
     url(r'', include('benteler.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^docs/', include('rest_framework_docs.urls')),
+    url(r'^me/$', CurrentUserView.as_view()),
 ]
 urlpatterns += [
     url(r'^api-token-auth/', views.obtain_auth_token)

@@ -15,6 +15,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import AbstractUser
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -39,14 +40,9 @@ class Role(models.Model):
         verbose_name_plural = _('Roles')
 
 
-class User(models.Model):
-    username = models.TextField(verbose_name=_('UserName'))
-    email = models.EmailField(verbose_name=_('Email'))
-    password = models.TextField(max_length=32, verbose_name=_('Password'))
-    create_time = models.DateTimeField(auto_now_add=True, blank=True,
-                                       verbose_name=_('CreateTime'))
-    role = models.ForeignKey(Role, on_delete=models.CASCADE,
-                             verbose_name=_('Role'))
+class User(AbstractUser):
+    role = models.ForeignKey(Role, null=True,
+                             on_delete=models.CASCADE, verbose_name=_('Role'))
 
     def __str__(self):
         return self.username
@@ -167,7 +163,8 @@ class Period(models.Model):
     repeated = models.IntegerField(
         verbose_name=_('Repeated'),
         choices=[(choice.value, choice.name) for choice in RepeatedEnum],
-        default=RepeatedEnum.EveryDay)
+        #  default=RepeatedEnum.EveryDay
+    )
     repeated_count = models.IntegerField(default=1,
                                          verbose_name=_('RepeatedCount'))
 

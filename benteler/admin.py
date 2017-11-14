@@ -15,6 +15,7 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ['username']
     form = UserForm
 
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Role)
 admin.site.register(CostCenter)

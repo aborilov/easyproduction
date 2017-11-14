@@ -45,10 +45,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework.authtoken'
 ]
+AUTH_USER_MODEL = 'benteler.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',),
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
     'DEFAULT_PERMISSION_CLASSES': (
             'rest_framework.permissions.IsAuthenticated',
         ),
@@ -158,6 +161,27 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, 'static'),
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', ],
+            'level': 'DEBUG',
+        },
+        'django': {
+            'handlers': ['console', ],
+            'level': 'INFO',
+        },
+    },
+
+}
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/

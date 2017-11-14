@@ -7,6 +7,27 @@ from . import serializers
 from django.http import HttpResponse
 
 import django_filters
+from django.contrib.auth import get_user_model
+from rest_framework.response import Response
+from rest_framework import serializers as ser
+from rest_framework.views import APIView
+
+import logging
+
+logger = logging.getLogger()
+
+
+class CurrentUserView(APIView):
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
+
+class UserSerializer(ser.ModelSerializer):
+
+    class Meta:
+        fields = '__all__'
+        model = get_user_model()
 
 
 def index(request):
