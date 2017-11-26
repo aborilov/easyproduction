@@ -25,7 +25,6 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 
-@python_2_unicode_compatible
 class UserForm(forms.ModelForm):
     class Meta:
         widgets = {'password': forms.PasswordInput()}
