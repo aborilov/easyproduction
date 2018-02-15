@@ -29,7 +29,7 @@ class WorkSerializer(BaseSerializer):
     class Meta:
         model = models.Work
         fields = ('id', 'description', 'url', 'work_pattern', 'date_start',
-                  'date_end', 'responsibles', 'relevance')
+                  'date_end', 'responsibles', 'relevance', 'place')
 
 
 class CostCenterSerializer(BaseSerializer):
