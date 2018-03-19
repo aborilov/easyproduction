@@ -357,15 +357,16 @@ def create_event(sender, instance=None, created=False, **kwargs):
             if (instance.date_start < date.today() or
                     instance.date_start is None):
                 start = date.today()
-            repeated = 1
-            while (start <= instance.date_end and
-                   repeated <= instance.work_pattern.period.repeated_count):
+            #  repeated = 1
+            #  while (start <= instance.date_end and
+            #  repeated <= instance.work_pattern.period.repeated_count):
+            while start <= instance.date_end:
                 event = Event()
                 event.work = instance
                 event.date = start
-                event.status = EventStatus.objects.filter(name="planned").get()
+                event.status = EventStatus.objects.filter(
+                    name="planned").get()
                 event.save()
-                repeated += 1
                 start += periods[instance.work_pattern.period.repeated]
         else:
             if not instance.date_start:
