@@ -8,7 +8,8 @@ from django.db import models
 from django.core.validators import validate_comma_separated_integer_list
 from django.utils.encoding import python_2_unicode_compatible
 
-from datetime import date as datetime
+from dateutil import relativedelta
+from datetime import date
 
 from enum import IntEnum
 
@@ -17,6 +18,18 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import AbstractUser
+
+import logging
+
+logger = logging.getLogger()
+
+
+periods = {
+    0: relativedelta.relativedelta(days=1),
+    1: relativedelta.relativedelta(weeks=1),
+    2: relativedelta.relativedelta(months=1),
+    3: relativedelta.relativedelta(years=1),
+}
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -296,14 +309,14 @@ class EventStatus(models.Model):
 class Event(models.Model):
     work = models.ForeignKey(Work, on_delete=models.CASCADE,
                              verbose_name=_('Work'))
-    date = models.DateField(default=datetime.today,
-                            verbose_name=_('Date'))
+    date = models.DateField(default=date.today, verbose_name=_('Date'))
     executors = models.ManyToManyField(User, verbose_name=_('Executors'))
     status = models.ForeignKey(EventStatus, on_delete=models.CASCADE,
                                verbose_name=_('EventStatus'))
 
     def __str__(self):
-        return self.work.work_pattern.name
+        return "{} - {}".format(
+            self.work.work_pattern.name, self.date)
 
     class Meta:
         verbose_name = _('Event')
@@ -328,3 +341,41 @@ class EventReport(models.Model):
     class Meta:
         verbose_name = _('EventReport')
         verbose_name_plural = _('EventReports')
+
+
+@receiver(post_save, sender=Work)
+def create_event(sender, instance=None, created=False, **kwargs):
+    if created:
+        #  import ipdb; ipdb.set_trace()  # XXX BREAKPOINT
+        logger.debug("creating")
+        if instance.work_pattern.period:
+            if not instance.date_end:
+                # don't create events without end date
+                return
+            #  we have periodical instance, need to add several event
+            start = instance.date_start
+            if (instance.date_start < date.today() or
+                    instance.date_start is None):
+                start = date.today()
+            repeated = 1
+            while (start <= instance.date_end and
+                   repeated <= instance.work_pattern.period.repeated_count):
+                event = Event()
+                event.work = instance
+                event.date = start
+                event.status = EventStatus.objects.filter(name="planned").get()
+                event.save()
+                repeated += 1
+                start += periods[instance.work_pattern.period.repeated]
+        else:
+            if not instance.date_start:
+                # don't create event without start date
+                return
+            #  it's one time job, just adding one event
+            logger.debug(
+                "adding one event on date {}".format(instance.date_start))
+            event = Event()
+            event.work = instance
+            event.date = instance.date_start
+            event.status = EventStatus.objects.filter(name="planned").get()
+            event.save()
