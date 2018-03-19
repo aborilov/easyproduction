@@ -378,5 +378,5 @@ def create_event(sender, instance=None, created=False, **kwargs):
             event = Event()
             event.work = instance
             event.date = instance.date_start
-            event.status = EventStatus.objects.filter(name="planned").get()
+            event.status = EventStatus.objects.filter(name="Planed").get()
             event.save()
