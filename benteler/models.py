@@ -23,6 +23,8 @@ import logging
 
 logger = logging.getLogger()
 
+PLANED = 'Planed'
+
 
 periods = {
     0: relativedelta.relativedelta(days=1),
@@ -365,7 +367,7 @@ def create_event(sender, instance=None, created=False, **kwargs):
                 event.work = instance
                 event.date = start
                 event.status = EventStatus.objects.filter(
-                    name="planned").get()
+                    name=PLANED).get()
                 event.save()
                 start += periods[instance.work_pattern.period.repeated]
         else:
@@ -378,5 +380,5 @@ def create_event(sender, instance=None, created=False, **kwargs):
             event = Event()
             event.work = instance
             event.date = instance.date_start
-            event.status = EventStatus.objects.filter(name="Planed").get()
+            event.status = EventStatus.objects.filter(name=PLANED).get()
             event.save()
