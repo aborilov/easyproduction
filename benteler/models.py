@@ -369,7 +369,8 @@ def create_event(sender, instance=None, created=False, **kwargs):
                 event.status = EventStatus.objects.filter(
                     name=PLANED).get()
                 event.save()
-                start += periods[instance.work_pattern.period.repeated]
+                for i in range(instance.work_pattern.period.repeated_count):
+                    start += periods[instance.work_pattern.period.repeated]
         else:
             if not instance.date_start:
                 # don't create event without start date
